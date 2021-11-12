@@ -21,6 +21,7 @@ async def mat(ctx,a: int,b, c: int):
         case '**':
             await ctx.send(round(a ** c, 2))
 
+
 """@bot.comand()"""
 
 
