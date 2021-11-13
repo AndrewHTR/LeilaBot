@@ -2,7 +2,7 @@ import discord
 from discord import activity
 import modules.comandos as cm
 import modules.tokenzada as tk
-atividade = discord.Activity(name="Sexo e drogas", type=discord.ActivityType.watching)
+atividade = discord.Activity(name="", type=discord.ActivityType.watching)
 client = discord.Client(activity=atividade)
 
 @client.event
