@@ -2,8 +2,7 @@ import discord
 from discord import activity
 import modules.comandos as cm
 import modules.tokenzada as tk
-atividade = discord.Activity(name="", type=discord.ActivityType.watching)
-client = discord.Client(activity=atividade)
+client = discord.Client()
 
 @client.event
 async def on_ready():
