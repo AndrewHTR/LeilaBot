@@ -12,11 +12,11 @@ class Jokenpo(commands.Cog):
         respostabot = random.randint(1,3)
         joken = {1: 'Pedra', 2: 'Papel', 3: 'Tesoura'}
         if opcao == "PEDRA":
-            if respostabot == 1:
+            if a == 1:
                 await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
                 time.sleep(1)
                 await ctx.send('Empate!! :face_exhaling:')
-            elif respostabot == 2:
+            elif a == 2:
                 await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
                 time.sleep(1)
                 await ctx.send(f'Ganhei! :sunglasses:')
@@ -24,7 +24,7 @@ class Jokenpo(commands.Cog):
                 await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
                 time.sleep(1)
                 await ctx.send(f'Você ganhou :neutral_face:')
-        if opcao == 'PAPEL':
+        if a == 'PAPEL':
                 if respostabot == 1:
                     await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
                     time.sleep(1)
@@ -37,7 +37,7 @@ class Jokenpo(commands.Cog):
                     await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
                     time.sleep(1)
                     await ctx.send('Ganhei! :sunglasses:')
-        if opcao == 'TESOURA':
+        if a == 'TESOURA':
                 if respostabot == 1:
                     await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
                     time.sleep(1)
