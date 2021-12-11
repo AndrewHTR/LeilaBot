@@ -11,21 +11,20 @@ class Jokenpo(commands.Cog):
         a = opcao.upper()
         respostabot = random.randint(1,3)
         joken = {1: 'Pedra', 2: 'Papel', 3: 'Tesoura'}
-        match(a):
-            case 'PEDRA':
-                if respostabot == 1:
-                    await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                    time.sleep(1)
-                    await ctx.send('Empate!! :face_exhaling:')
-                elif respostabot == 2:
-                    await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                    time.sleep(1)
-                    await ctx.send(f'Ganhei! :sunglasses:')
-                else:
-                    await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                    time.sleep(1)
-                    await ctx.send(f'Você ganhou :neutral_face:')
-            case 'PAPEL':
+        if opcao == "PEDRA":
+            if respostabot == 1:
+                await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
+                time.sleep(1)
+                await ctx.send('Empate!! :face_exhaling:')
+            elif respostabot == 2:
+                await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
+                time.sleep(1)
+                await ctx.send(f'Ganhei! :sunglasses:')
+            else:
+                await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
+                time.sleep(1)
+                await ctx.send(f'Você ganhou :neutral_face:')
+        if opcao == 'PAPEL':
                 if respostabot == 1:
                     await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
                     time.sleep(1)
@@ -38,7 +37,7 @@ class Jokenpo(commands.Cog):
                     await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
                     time.sleep(1)
                     await ctx.send('Ganhei! :sunglasses:')
-            case 'TESOURA':
+        if opcao == 'TESOURA':
                 if respostabot == 1:
                     await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
                     time.sleep(1)
