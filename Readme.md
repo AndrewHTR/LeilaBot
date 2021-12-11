@@ -1,9 +1,9 @@
-__AlfredoBot__, Um bot para o discord <h1>
-Feito utilizando <h2>
+__AlfredoBot__, Um bot para o discord<h1>
+Feito utilizando<h2>
 - [pytube](https://pytube.io/en/latest/index.html)
 - [pycord](https://docs.pycord.dev/en/master/)
 ##
-**Toca musicas** <h2>
+**Toca musicas**<h2>
 - comandos de:
 play
 stop
@@ -15,4 +15,4 @@ comando de queue
 manipulação de queue
 alteração de volume
 
-**Minigames** <h2>
+**Minigames**<h2>
