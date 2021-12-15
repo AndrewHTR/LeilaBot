@@ -10,21 +10,6 @@ class Coisas(commands.Cog):
         await ctx.send(''.join(arg))
 
     @commands.command()
-    async def mat(self, ctx,a: int,b, c: int):
-        match(b):
-            case'+':
-                await ctx.send(a + c)
-            case '*':
-                await ctx.send(a * c)
-            case '/':
-                
-                await ctx.send(round(a / c, 2))
-            case '**':
-                await ctx.send(a ** c)
-
-
-
-    @commands.command()
     async def ajuda(self, ctx,pessoa):
         await discord.send_friend_request(pessoa)
 
