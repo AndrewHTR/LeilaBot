@@ -1,8 +1,10 @@
 import pytube
 import discord
-import os
 from discord.ext import commands
+import os
 
+queue = []
+queuen = []
 class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -26,20 +28,40 @@ class Music(commands.Cog):
     async def play(self,ctx, *, url):
         FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
     
-        server = ctx.message.guild
-        voice = server.voice_client
-        
-        yt = pytube.YouTube(url)
-        print(f'O video: {yt.title}')
+        #server = ctx.message.guild
+        #voice = server.voice_client
+        voice = discord.utils.get(self.bot.voice_clients, guild=ctx.guild)
         myitag = 251
-        if 'https' not in url:
-            video = pytube.Search(yt)
+        arquivo = url
+        self.queue = queue
         
-        video = yt.streams.get_by_itag(myitag)
-        video.download(filename='music')
-        voice.play(discord.FFmpegPCMAudio(executable='ffmpeg.exe', source= 'music'))
-        voice.is_playing()
-        
+
+        if url in queue:
+            await ctx.send('Esta musica já está na queue')
+        else:
+            queue.append(url)
+
+        for url in queue:
+            yt = pytube.YouTube(url)
+            video = yt.streams.get_by_itag(myitag)
+            video.download(filename='music')
+
+        a = yt.title
+        i = 0 
+        while i < len(self.queue):
+            try:
+                voice.play(discord.FFmpegPCMAudio(executable='ffmpeg.exe', source='music'))
+                await ctx.send(f'Tocando agora: {yt.title}')
+            except:
+                pass
+            i += 1
+        queuen.append(yt.title)
+
+        print(f'O video: {yt.title}')
+           
+
+           
+
     @commands.command()
     async def pause(self, ctx):
         server = ctx.message.guild
@@ -48,7 +70,7 @@ class Music(commands.Cog):
         if voice_channel.is_playing():
             voice_channel.pause()
         else:
-            await ctx.send("O bot não está tocando nada no momento")
+            await ctx.send("O bot não está tocando nada no momento. Use o comando !play (musica) para tocar algo.")
 
     @commands.command()
     async def resume(self, ctx):
@@ -64,7 +86,11 @@ class Music(commands.Cog):
         if ctx.message.guild.voice_client.is_playing():
             ctx.message.guild.voice_client.stop()
         else:
-            await ctx.send(" O bot não está tocando nada no momento.")
+            await ctx.send(" O bot não está tocando nada no momento. Use o comando !play (musica) para tocar algo.")
+
+    @commands.command()
+    async def queue(self, ctx):
+        print(queuen)
 
 def setup(bot):
     bot.add_cog(Music(bot))
