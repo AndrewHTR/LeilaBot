@@ -8,7 +8,7 @@ intents = discord.Intents().all()
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-for filename in os.listdir('./src/ent'):
+for filename in os.listdir('./src/entertaiment'):
     if filename.endswith('.py'):
         print(f'Loading entertaiment {filename}')
         bot.load_extension(f'ent.{filename[:-3]}')
