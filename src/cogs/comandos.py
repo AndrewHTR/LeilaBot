@@ -20,7 +20,7 @@ class Comandos(commands.Cog):
     async def perfil(self, ctx, member: discord.Member):    
         time = datetime.datetime.now() 
         avatar = member.avatar
-        embed = discord.Embed(color = random.randint(0, 0xffffff),title=f"Perfil do Usuario {member.name}")
+        embed = discord.Embed(color = random.randint(0, 0xffffff),title=f"Perfil do Usuário {member.name}")
         embed.set_thumbnail(url = avatar)
         embed.set_author(name=f"Bot criado por: Andrew Kauã",
         url = "https://github.com/AndrewHTR",

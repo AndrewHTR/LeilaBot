@@ -11,7 +11,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 for filename in os.listdir('./src/entertaiment'):
     if filename.endswith('.py'):
         print(f'Loading entertaiment {filename}')
-        bot.load_extension(f'ent.{filename[:-3]}')
+        bot.load_extension(f'entertaiment.{filename[:-3]}')
 for filename in os.listdir('./src/events'):
     if filename.endswith('.py'):
         print(f'Loading event {filename}')
