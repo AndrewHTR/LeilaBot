@@ -11,12 +11,12 @@ class Comandos(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command(guild_ids=[int(get_guildid())])
+    @slash_command(guild_ids=[int(get_guildid())], help="Faz com que o bot mande mensagem")
     async def falar(self, ctx, *, arg):
         await ctx.respond(''.join(arg))
         
 
-    @slash_command(guild_ids=[int(get_guildid())])
+    @slash_command(guild_ids=[int(get_guildid())], help="Mostra informações do usuário" )
     async def perfil(self, ctx, member: discord.Member):    
         time = datetime.datetime.now() 
         avatar = member.avatar

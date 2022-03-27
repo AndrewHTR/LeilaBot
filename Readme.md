@@ -1,23 +1,33 @@
 # __AlfredoBot__, Um bot para o discord 
-Feito utilizando
-- [pytube](https://pytube.io/en/latest/index.html)
-- [pycord](https://docs.pycord.dev/en/master/)
 
-## Toca musicas 
-### comandos de:
+## Pequeno bot simples com funções como tocar músicas, mostrar perfil do usuário, falar, etc...
+
+## Apresenta minigames e entretenimento. Futuramente será adicionado mais funções
+
+<br>
+
+### **Comandos de Musica**:
 * play
 * stop
 * pause
 * resume
 
-### planejo futuramente:
+### **Minigames até o momento:** 
+* jokenpo
+
+### **Para música planejo futuramente:**
 * comando de queue
 * manipulação de queue
 * alteração de volume
 
-## **Minigames** 
-* jokenpo
-### planejo futuramente:
+### **Para minigames planejo futuramente**:
 * cara ou coroa
 * jogo da velha
 * 8ball
+
+## Feito utilizando
+- **[pytube](https://pytube.io/en/latest/index.html)**
+- **[pycord](https://docs.pycord.dev/en/master/)**
+
+
+Link para **[wiki](https://github.com/AndrewHTR/AlfredoBot/wiki)**
