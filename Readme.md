@@ -4,7 +4,6 @@
 
 ## Apresenta minigames e entretenimento. Futuramente será adicionado mais funções
 
-<br>
 
 ### **Comandos de Musica**:
 * play
