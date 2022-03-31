@@ -1,12 +1,13 @@
 import discord
-from discord import file
 from discord.ext import commands
 from modules.utils import get_token
 import os
+import logging
+
 
 intents = discord.Intents().all()
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="?", intents=intents)
 
 for filename in os.listdir('./src/entertaiment'):
     if filename.endswith('.py'):
@@ -22,4 +23,3 @@ for filename in os.listdir('./src/cogs'):
         bot.load_extension(f'cogs.{filename[:-3]}')
 
 bot.run(get_token()) 
-

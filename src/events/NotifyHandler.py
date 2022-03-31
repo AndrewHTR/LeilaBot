@@ -1,13 +1,11 @@
+from discord import Webhook, slash_command
 import discord
-from discord.ext import commands
+from discord.ext import commands 
+import aiohttp
 
 class NotifyHandler(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    @commands.Cog.listener()
-    async def on_message(self, ctx):
-        print("a")
-
 
 
 def setup(bot):

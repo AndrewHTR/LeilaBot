@@ -1,11 +1,9 @@
-import discord
-from discord.commands import slash_command
+import discord, aiohttp, random, datetime
+from discord.commands import slash_command, command
 from discord.ext import commands
-import random
-import datetime
 from modules.utils import get_guildid
-
-
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
 
 class Comandos(commands.Cog):
     def __init__(self, bot):
@@ -14,22 +12,29 @@ class Comandos(commands.Cog):
     @slash_command(guild_ids=[int(get_guildid())], help="Faz com que o bot mande mensagem")
     async def falar(self, ctx, *, arg):
         await ctx.respond(''.join(arg))
+
+    @commands.command()
+    async def teste(self, ctx):
+        html = urlopen("https://store.epicgames.com/pt-BR/")
+        bs = BeautifulSoup(html, 'html.parser')
+
+        async with aiohttp.ClientSession() as session:
+            time = datetime.datetime.now()
+            webhook = discord.Webhook.from_url('https://discord.com/api/webhooks/959082526616465480/Ztrt68L7WuDp29DU21S-hPcDMMVycy5-CkFaIaSCw9rSPB5ryQ85nfRFj_myMag5UIxN', session=session)
+            embed = discord.Embed(title="Informações: ", color = random.randint(0, 0xffffff))
+            embed.set_author(name=f"Bot criado por: Andrew Kauã",
+            url = "https://github.com/AndrewHTR",
+            icon_url="https://cdn.discordapp.com/avatars/500456611073228821/481f96ffc73c973188e9595317256e94.png")
+            embed.set_footer(text=f"Horário: {time.strftime('%H:%M:%S')}", icon_url="https://cdn.discordapp.com/avatars/689012066266382351/c16512460537ad5174c5c16a319e1258.png")
+            linhas = bs.find('div', {'class':'css-voksei'})
+            test, a, b, c = [], [], [], []
+            for i in linhas:
+                filhas = i.findChildren('div')
+                test.append(filhas[0].text)
+                a.append(filhas[1].text)
+                b.append(filhas[2].text)
+                c.append(filhas[3])
+            await webhook.send(f"{linhas}", username='Alfredo')
         
-
-    @slash_command(guild_ids=[int(get_guildid())], help="Mostra informações do usuário" )
-    async def perfil(self, ctx, member: discord.Member):    
-        time = datetime.datetime.now() 
-        avatar = member.avatar
-        embed = discord.Embed(color = random.randint(0, 0xffffff),title=f"Perfil do Usuário {member.name}")
-        embed.set_thumbnail(url = avatar)
-        embed.set_author(name=f"Bot criado por: Andrew Kauã",
-        url = "https://github.com/AndrewHTR",
-        icon_url="https://cdn.discordapp.com/avatars/500456611073228821/481f96ffc73c973188e9595317256e94.png")
-
-        embed.add_field(name="__**Informações da conta:**__\n", value=f"""**Nome no Discord:** {member.name}\n**Status:** {member.activity}\n**Está atualmente:** {member.status}\n**Conta criada: **{member.created_at.__format__("%d/%m/%Y as %H:%M")}""")
-        embed.add_field(name="__**Informações do perfil no servidor:**__", value=f"""**Nick:** {member.nick}\n**Entrou no servidor:** {member.joined_at.__format__("%d/%m/%Y as %H:%M")}\n**Cargos:** {''.join([r.mention for r in member.roles[1:]])}""", inline=False)
-        embed.set_footer(text=f"Horário: {time.strftime('%H:%M:%S')}", icon_url="https://cdn.discordapp.com/avatars/689012066266382351/c16512460537ad5174c5c16a319e1258.png")
-        await ctx.respond(embed=embed)
-
 def setup(bot):
     bot.add_cog(Comandos(bot))

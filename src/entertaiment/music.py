@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 import youtube_dl
-import pytube
+
 queue = []      
 options = {
     'format': 'bestaudio/best',
@@ -66,32 +66,13 @@ class Music(commands.Cog):
         #server = ctx.message.guild
         #voice = server.voice_client
         voice = discord.utils.get(self.bot.voice_clients, guild=ctx.guild)
-        myitag = 251
-        arquivo = url
-        self.queue = queue
-        
-
-        if url in queue:
-            await ctx.send('Esta musica já está na queue')
-        else:
-            queue.append(url)
-
-        for url in queue:
-            yt = pytube.YouTube(url)
-            video = yt.streams.get_by_itag(myitag)
-            video.download(filename='music')
-
-        a = yt.title
-        i = 0 
-        while i < len(self.queue):
-            try:
-                voice.play(discord.FFmpegPCMAudio(executable='ffmpeg.exe', source='music'))
-                await ctx.send(f'Tocando agora: {yt.title}')
-            except:
-                pass
-            i += 1
-
-        print(f'O video: {yt.title}')
+        try:    
+                async with ctx.typing():
+                    player = await YTDLSource.from_url(url,loop=self.bot.loop, stream=True)
+                    voice.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
+                    await ctx.send(f'Tocando agora {player.title}')
+        except:
+            pass
            
 
            
