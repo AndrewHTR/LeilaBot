@@ -18,9 +18,10 @@ class Social(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    #@slash_command(guild_ids=[int(get_guildid())], help="Mostra informações do usuário" )
-    @commands.command()
-    async def perfil(self, ctx, member: discord.Member):    
+    @slash_command(guild_ids=[int(get_guildid())], description = "Mostra informações do usuário" )
+    #@commands.command()
+    async def perfil(self, ctx, member: discord.Member):
+        """Mostra informações do usuario """    
         #region embeds
         time = datetime.datetime.now() 
         avatar = member.avatar
