@@ -43,20 +43,20 @@ class Music(commands.Cog):
         self.bot = bot
     
 
-    @commands.command(name='join', help='Manda o commands entrar em um canal de voz')
+    @commands.command(name='join', help='Leila entra em um canal de voz')
     async def join(self, ctx):
         if not ctx.message.author.voice:
             await ctx.send(f'{ctx.message.author.name} não está conectado.')
         else:
             channel = ctx.message.author.voice.channel
         await channel.connect()
-    @commands.command(name='leave', help='Manda o commands sair do canal de voz.')
+    @commands.command(name='leave', help='Leila sai do canal de voz.')
     async def leave(self, ctx):
         voice_client = ctx.message.guild.voice_client
         if voice_client.is_connected():
             await voice_client.disconnect()
         else:
-            await ctx.send('O commands não está conectado ao canal de voz.')
+            await ctx.send('A Leila não está conectado ao canal de voz.')
 
     
     @commands.command()

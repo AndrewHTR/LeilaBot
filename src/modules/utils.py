@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+from discord.ext import commands, tasks
 
 load_dotenv()
 
@@ -14,3 +15,9 @@ def get_token():
     if token == None:
         return os.environ["token"]
     return token
+
+def get_prefix():
+    prefix = os.getenv("prefix")
+    if prefix == None:
+        return os.environ["prefix"]
+    return prefix
