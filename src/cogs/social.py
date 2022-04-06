@@ -39,7 +39,7 @@ class Social(commands.Cog):
 
         view.add_item(AddButton(texto='Wiki', url='https://github.com/AndrewHTR/AlfredoBot/wiki'))
         
-        await ctx.send(embed=embed, view=view)
+        await ctx.respond(embed=embed, view=view)
 
 def setup(bot):
     bot.add_cog(Social(bot))
