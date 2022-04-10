@@ -35,11 +35,8 @@ class Social(commands.Cog):
         embed.add_field(name="__**Informações do perfil no servidor:**__", value=f"""**Nick:** {member.nick}\n**Entrou no servidor:** {member.joined_at.__format__("%d/%m/%Y as %H:%M")}\n**Cargos:** {''.join([r.mention for r in member.roles[1:]])}""", inline=False)
         embed.set_footer(text=f"Horário: {time.strftime('%H:%M:%S')}", icon_url="https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
         #endregion       
-        view = discord.ui.View(timeout=None)
-
-        view.add_item(AddButton(texto='Wiki', url='https://github.com/AndrewHTR/AlfredoBot/wiki'))
         
-        await ctx.respond(embed=embed, view=view)
+        await ctx.respond(embed=embed)
 
 def setup(bot):
     bot.add_cog(Social(bot))

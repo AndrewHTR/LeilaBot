@@ -3,7 +3,7 @@ from discord.ext import commands
 import time
 import random
 
-class Jokenpo(commands.Cog):
+class Minigames(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     @commands.command()
@@ -52,4 +52,4 @@ class Jokenpo(commands.Cog):
                     await ctx.send('Empate!! :face_exhaling:')
                     
 def setup(bot):
-    bot.add_cog(Jokenpo(bot))
+    bot.add_cog(Minigames(bot))

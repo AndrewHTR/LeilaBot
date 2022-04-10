@@ -50,6 +50,7 @@ class Music(commands.Cog):
         else:
             channel = ctx.message.author.voice.channel
         await channel.connect()
+
     @commands.command(name='leave', help='Leila sai do canal de voz.')
     async def leave(self, ctx):
         voice_client = ctx.message.guild.voice_client
@@ -59,7 +60,7 @@ class Music(commands.Cog):
             await ctx.send('A Leila não está conectado ao canal de voz.')
 
     
-    @commands.command()
+    @commands.command(help='Leila toca a música desejada.')
     async def play(self,ctx, *, url):
         FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
     
@@ -73,11 +74,8 @@ class Music(commands.Cog):
                     await ctx.send(f'Tocando agora {player.title}')
         except:
             pass
-           
 
-           
-
-    @commands.command()
+    @commands.command(help='Leila pausa a música atual.')
     async def pause(self, ctx):
         server = ctx.message.guild
         voice_channel = server.voice_client
@@ -87,7 +85,7 @@ class Music(commands.Cog):
         else:
             await ctx.send("O bot não está tocando nada no momento. Use o comando !play (musica) para tocar algo.")
 
-    @commands.command()
+    @commands.command(help='Leila tira o pause da música atual.')
     async def resume(self, ctx):
         voice_client = ctx.message.guild.voice_client
         if ctx.message.guild.voice_client.is_paused():
@@ -95,7 +93,7 @@ class Music(commands.Cog):
         else:
             await ctx.send("O bot não está tocando nada. Use o comando !play (musica) para tocar algo.")
 
-    @commands.command()
+    @commands.command(help='Leila tira todas as músicas.')
     async def stop(self, ctx):
         voice_client = ctx.message.guild.voice_client
         if ctx.message.guild.voice_client.is_playing():
@@ -103,7 +101,7 @@ class Music(commands.Cog):
         else:
             await ctx.send(" O bot não está tocando nada no momento. Use o comando !play (musica) para tocar algo.")
         queue.clear()
-    @commands.command()
+    @commands.command(help='Leila mostra todas as músicas colocadas.')
     async def queue(self, ctx):
         print(queue)
     
