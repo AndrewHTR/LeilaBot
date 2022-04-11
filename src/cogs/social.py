@@ -20,8 +20,8 @@ class Social(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    #@slash_command(guild_ids=[int(get_guildid())], description = "Mostra informações do usuário" )
-    @commands.command()
+    @slash_command(guild_ids=[int(get_guildid())], description = "Mostra informações do usuário" )
+    #@commands.command()
     async def perfil(self, ctx, member: discord.Member = None):
         """Mostra informações do usuario """    
             #region embeds
@@ -52,11 +52,11 @@ class Social(commands.Cog):
                     await interaction.response.send_message(content='Pimpolho')
                     return
                 button.callback = button_callback
-                await ctx.send(embed=embed, view=view)
+                await ctx.respond(embed=embed, view=view)
                 
             
             except:
-                await ctx.send('Erro. D:')
+                await ctx.respond('Erro. D:')
 
 def setup(bot):
     bot.add_cog(Social(bot))
