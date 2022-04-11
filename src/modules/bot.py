@@ -1,3 +1,4 @@
+import datetime
 import discord
 from discord.ext import commands
 import random
@@ -43,8 +44,9 @@ class NewHelpName(commands.MinimalHelpCommand):
     async def send_pages(self):
         destination = self.get_destination()
         self.paginator.add_line("\nPara mais informações aperte no botão **Wiki** abaixo. :D")
-        emby = discord.Embed(color = random.randint(0, 0xffffff), title='Ajuda', description='')
-
+        time = datetime.datetime.now() 
+        emby = discord.Embed(color = 0xad75ad, title='**Comandos do bot:**', description='')
+        emby.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
         for page in self.paginator.pages:
             emby.description += page   
         view = discord.ui.View(timeout=None)
