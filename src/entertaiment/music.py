@@ -281,6 +281,10 @@ class Music(commands.Cog):
     async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
         await ctx.send('Um erro ocorreu: {}'.format(str(error)))
 
+    @bridge.bridge_command()
+    async def testi(self, ctx):
+        await ctx.send('a')
+
     @commands.command(name='join', invoke_without_subcommand=True)
     async def _join(self, ctx: commands.Context):
         """Joins a voice channel."""

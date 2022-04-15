@@ -8,25 +8,25 @@ class ErrorHandler(commands.Cog):
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send("Parece que você não tem permissão para isso bobinho :shushing_face:")
-            print(f"A pessoa não tem permissão para usar o comando {ctx}")
+            print(error)
         if isinstance(error, commands.MissingAnyRole):
             await ctx.send("Você não tem um cargo para isso.")
-            print(f"A pessoa não tem um cargo para utilizar o comando {ctx}")
+            print(error)
         if isinstance(error, commands.CommandNotFound):
             await ctx.send("Esse comando não existe.")
-            print(f"O comando {ctx} não existe")
+            print(error)
             
     @commands.Cog.listener()
-    async def on_application_command_error(self, ctx, error):
+    async def on_application_command_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send("Parece que você não tem permissão para isso bobinho :shushing_face:")
-            print(f"A pessoa não tem permissão para usar o comando {ctx}")
+            print(error)
         if isinstance(error, commands.MissingAnyRole):
             await ctx.send("Você não tem um cargo para isso.")
-            print(f"A pessoa não tem um cargo para utilizar o comando {ctx}")
+            print(error)
         if isinstance(error, commands.CommandNotFound):
             await ctx.send("Esse comando não existe.")
-            print(f"O comando {ctx} não existe")
+            print(error)
             
 
 def setup(bot):

@@ -9,6 +9,13 @@ intents = discord.Intents().all()
 activity = discord.Activity(type=discord.ActivityType.watching, name=" o Lar dos Cornos :D")
 bot = commands.Bot(command_prefix=get_prefix(), intents=intents, help_command=NewHelpName(no_category = 'Sem categoria'), activity=activity, status=discord.Status.idle)
 
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
+
 for filename in os.listdir('./src/entertaiment'):
     if filename.endswith('.py'):
         print(f'Carregando entertaiment {filename}')

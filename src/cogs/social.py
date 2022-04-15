@@ -20,8 +20,8 @@ class Social(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @slash_command(guild_ids=[int(get_guildid())], description = "Mostra informações do usuário" )
-    #@commands.command()
+    #@slash_command(guild_ids=[int(get_guildid())], description = "Mostra informações do usuário" )
+    @commands.command(help='Mostra perfil dos usuarios')
     async def perfil(self, ctx, member: discord.Member = None):
         """Mostra informações do usuario """    
             #region embeds
@@ -31,6 +31,7 @@ class Social(commands.Cog):
             try:
                 time   = datetime.datetime.now() 
                 avatar = member.avatar
+                
                 embed  = discord.Embed(color = 0xad75ad, title = f"Perfil do Usuário {member.name}")
                 embed.set_thumbnail(url = avatar)
                 #embed.set_author(name = f"Bot criado por: Andrew Kauã",
@@ -38,7 +39,7 @@ class Social(commands.Cog):
                 #icon_url = "https://media.discordapp.net/attachments/673668744471379971/960000584948269076/IMG_20220402_231811.jpg")
 
                 embed.add_field(name = "__**Informações da conta:**__\n", value = f"""**Nome no Discord:** {member.name}\n**Status:** {member.activity}\n**Está atualmente:** {member.status}\n**Conta criada: **{member.created_at.__format__("%d/%m/%Y as %H:%M")}""")
-                embed.add_field(name = "__**Informações do perfil no servidor:**__", value = f"""**Nick:** {member.nick}\n**Entrou no servidor:** {member.joined_at.__format__("%d/%m/%Y as %H:%M")}\n**Cargos:** {''.join([r.mention for r in member.roles[1:]])}""", inline=False)
+                embed.add_field(name = "__**Informações do perfil no servidor:**__", value = f"""**Nick:** {member.nick}\n**Entrou no servidor:** {member.joined_at.__format__("%d/%m/%Y as %H:%M")}\n**Cargos:** {' '.join([r.mention for r in member.roles[1:]])}""", inline=False)
                 embed.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
                 #endregion       
                 button = Button(label='Aperte', style=discord.ButtonStyle.gray, emoji='➡️')
@@ -56,24 +57,57 @@ class Social(commands.Cog):
                 view.add_item(button)
                 view.add_item(button2)
                 
-                await ctx.respond(embed=embed, view=view)
+                await ctx.send(embed=embed, view=view)
                 
             
             except:
-                await ctx.respond('Erro. D:')
+                await ctx.send('Erro. D:')
    
-    @slash_command(guild_ids=[int(get_guildid())], description = "Mostra informações do usuário" )
-    #@commands.command()
-    async def avatar(self, ctx: commands.Context, member: discord.Member):
+    #@slash_command(guild_ids=[int(get_guildid())], description = "Mostra informações do usuário" )
+    @commands.command(help='Mostra o avatar do usuario')
+    async def avatar(self, ctx: commands.Context, member: discord.Member = None):
+        if not member: member = ctx.author
         avatar = member.avatar.url[:90]
         time   = datetime.datetime.now() 
-        embed = discord.Embed(title=f'__**Avatar requisitado por:**__ **{ctx.author.name}**', color = 0xad75ad, description='Aperte no botão **"DOWNLOAD"** abaixo para fazer download da imagem.')
+        
+        embed = discord.Embed(title=f'__**Avatar requisitado por:**__ **{ctx.author.name}**', color = 0xad75ad, description='Aperte no botão **"DOWNLOAD"** abaixo\npara fazer download da imagem.')
         embed.set_image(url=avatar)
         embed.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
-        download_button = Button(label='Download', url=avatar)
 
+        download_button = Button(label='Download', url=avatar)
         view = View(timeout=None)
         view.add_item(download_button)
-        await ctx.respond(embed=embed, view=view)
+        await ctx.send(embed=embed, view=view)
+
+    @commands.command(help='Mostra o icone do server')
+    async def icon(self, ctx: commands.Context):
+        icon = ctx.guild.icon.url[:88]
+        print(icon)
+        time   = datetime.datetime.now() 
+        embed = discord.Embed(title=f'__**Icone requisitado por:**__ **{ctx.author.name}**', color = 0xad75ad, description='Aperte no botão **"DOWNLOAD"** abaixo\npara fazer download da imagem.')
+        embed.set_image(url=icon)
+        embed.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
+
+        download_button = Button(label='Download', url=icon)
+        view = View(timeout=None)
+        view.add_item(download_button)
+        
+        await ctx.send(embed=embed, view=view)
+    
+    @commands.command()
+    async def server_info(self, ctx: commands.Context):
+        time   = datetime.datetime.now()
+
+        rolelist = [r.name for r in ctx.guild.roles if r != ctx.guild.default_role]
+        roles = ", ".join(rolelist)
+        
+        embed = discord.Embed(title=f'**Informações do servidor: {ctx.guild.name}**', color=0xad75ad,
+        description=f'💠 **Dono do server:** {ctx.guild.owner}\n💠 **Data de crianção:** {ctx.guild.created_at.__format__("%d/%m/%Y as %H:%M")}\n💠 **Usuarios:** {ctx.guild.member_count.real}\n💠 Canais de texto: {len(ctx.guild.text_channels)}\n💠 Canais de voz: {len(ctx.guild.voice_channels)}\n💠 Prefixo atual: {ctx.prefix}')
+        embed.set_author(name='Informações de servidor', icon_url=ctx.guild.icon.url[:88])
+        embed.add_field(name='**Cargos do servidor:**', value=f'{roles}\n\nServer ID: {ctx.guild.id}')
+        embed.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
+
+        await ctx.send(embed=embed)
+
 def setup(bot):
-    bot.add_cog(Social(bot))
+    bot.add_cog(Social(bot)) 
