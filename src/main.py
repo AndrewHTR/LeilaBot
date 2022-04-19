@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, bridge
 from modules.utils import get_token, get_prefix
 import os
 import logging
@@ -7,7 +7,7 @@ from modules.bot import NewHelpName
 
 intents = discord.Intents().all()
 activity = discord.Activity(type=discord.ActivityType.watching, name=" o Lar dos Cornos :D")
-bot = commands.Bot(command_prefix=get_prefix(), intents=intents, help_command=NewHelpName(no_category = 'Sem categoria'), activity=activity, status=discord.Status.idle)
+bot = bridge.Bot(command_prefix=get_prefix(), intents=intents, help_command=NewHelpName(no_category = 'Sem categoria'), activity=activity, status=discord.Status.idle)
 
 
 logger = logging.getLogger('discord')
