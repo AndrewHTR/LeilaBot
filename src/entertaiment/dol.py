@@ -1,23 +1,40 @@
 import discord
-from async_timeout import timeout
-from discord.ext import commands, bridge
-from discord.ext.bridge import BridgeContext, BridgeExtContext, BridgeApplicationContext
+from discord.ext import commands
 import requests
+import datetime
+
 class Dol(commands.Cog):
-    def __init__(self, bot: bridge.Bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
     @commands.command()
-    async def dolar(self, ctx: BridgeContext):
-        thumb = 'https://cdn.discordapp.com/attachments/857302713233833987/965966562282573864/kisspng-powell-law-group-p-c-brazilian-real-moeda-de-um-moedas-5b344c7a44d4a0.7824366215301541062819.png'
-        embed = discord.Embed(title='BRL para USD:', color=0xad75ad, description=f"O valor do Real para o Dólar atualmente está em R${round(float(dolar_value), 2)}")
-        embed.set_thumbnail(thumb)
+    async def dolar(self, ctx: commands.Context):
+        time = datetime.datetime.utcnow()
         url = 'https://economia.awesomeapi.com.br/all/USD-BRL'
-
         response = requests.get(url)
+        dolar_value = response.json()['USD']['low']
+
+        embed = discord.Embed(title='__**BRL para USD:**__', color = 0xad75ad, description=f"O valor do **Real** para o **Dólar** atualmente está em __R${round(float(dolar_value), 2)}__")
+        embed.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
+        embed.set_thumbnail(url='https://media.discordapp.net/attachments/959082477555679232/966071295185915954/kiss.png')
 
         if response.status_code == 200:
-            dolar_value = response.json()['USD']['low']
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send('Erro ao buscar valor do Dólar')
+    
+    @commands.command()
+    async def euro(self, ctx: commands.Context):
+        time = datetime.datetime.utcnow()
+        url = 'https://economia.awesomeapi.com.br/all/'
+        response = requests.get(url)
+        euro_value = response.json()['EUR']['low']
+
+        embed = discord.Embed(title='__**BRL para EUR:**__', color = 0xad75ad, description=f"O valor do **Real** para o **Euro** atualmente está em __R${round(float(euro_value), 2)}__")
+        embed.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
+        embed.set_thumbnail(url='https://media.discordapp.net/attachments/959082477555679232/966071295185915954/kiss.png')
+
+        if response.status_code == 200:
             await ctx.send(embed=embed)
         else:
             await ctx.send('Erro ao buscar valor do Dólar')

@@ -25,7 +25,10 @@ class Moderation(commands.Cog):
     @bridge.bridge_command()
     async def falar(self, ctx: BridgeContext, *, args: str):
         args.join(' ')
-        await ctx.send(args)
+        if isinstance(ctx, BridgeExtContext):
+            await ctx.send(args)
+        else:
+            await ctx.respond(args)
 
     #@slash_command(guild_ids=[int(get_guildid())], description = "Faz com que o bot mande mensagem")
     @bridge.bridge_command(aliases=['banir'])
@@ -48,7 +51,7 @@ class Moderation(commands.Cog):
                 await ctx.send('Não foi possivel banir o usuario. Meu cargo pode estar abaixo ao dele.')
         
     @bridge.bridge_command(aliases=['chutar'])
-    #@bridge.has_permissions(kick_members=True)
+    # ! @bridge.has_permissions(kick_members=True)
     async def kick(self, ctx: BridgeContext, member: discord.Member):
         try:
             if(member != ctx.author):

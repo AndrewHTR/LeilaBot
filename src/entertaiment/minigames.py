@@ -4,52 +4,46 @@ import time
 import random
 
 class Minigames(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
     @commands.command()
-    async def jokenpo(self, ctx,opcao):
-        a = opcao.upper()
-        respostabot = random.randint(1,3)
-        joken = {1: 'Pedra', 2: 'Papel', 3: 'Tesoura'}
-        if opcao == "PEDRA":
-            if a == 1:
-                await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                time.sleep(1)
-                await ctx.send('Empate!! :face_exhaling:')
-            elif a == 2:
-                await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                time.sleep(1)
-                await ctx.send(f'Ganhei! :sunglasses:')
-            else:
-                await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                time.sleep(1)
-                await ctx.send(f'Você ganhou :neutral_face:')
-        if a == 'PAPEL':
-                if respostabot == 1:
-                    await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                    time.sleep(1)
-                    await ctx.send('Você ganhou... :neutral_face:')
-                elif respostabot == 2:
-                    await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                    time.sleep(1)
-                    await ctx.send('Empate!! :face_exhaling:')
-                else: 
-                    await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                    time.sleep(1)
-                    await ctx.send('Ganhei! :sunglasses:')
-        if a == 'TESOURA':
-                if respostabot == 1:
-                    await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                    time.sleep(1)
-                    await ctx.send('Ganhei! :sunglasses:')
-                elif respostabot == 2:
-                    await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                    time.sleep(1)
-                    await ctx.send('Você ganhou... :neutral_face:')
-                else: 
-                    await ctx.send(f'Eu escolhi {joken.get(respostabot)}...')
-                    time.sleep(1)
-                    await ctx.send('Empate!! :face_exhaling:')
+    async def jokenpo(self, ctx: commands.Context):
+        resposta_bot = random.choice(['Pedra', 'Papel', 'Tesoura'])
+        await ctx.send('Vamos brincar de Jokenpo!')
+        time.sleep(1)
+        await ctx.send('Escolha Pedra, Papel ou Tesoura e vamos ver quem ganha! :smirk_cat:')
+        resposta = await self.bot.wait_for('message', check=lambda message: message.author == ctx.author)
+        resposta_user = resposta.content.lower()
+        await ctx.send(f"Eu escolho {resposta_bot}")
+        if resposta_user == 'pedra':
+            if resposta_bot == "Papel":
+                await ctx.send('Eu ganhei :sunglasses:')
+
+            elif resposta_bot == 'Pedra':
+                await ctx.send('Empate :cry:')
+
+            elif resposta_bot == 'Tesoura':
+                await ctx.send('Você ganhou :unamused:')
+        
+        elif resposta_user == 'papel':
+            if resposta_bot == "Papel":
+                await ctx.send('Empate :cry:')
+
+            elif resposta_bot == 'Pedra':
+                await ctx.send('Você ganhou :unamused:')
+
+            elif resposta_bot == 'Tesoura':
+                await ctx.send('Eu ganhei :sunglasses:')
+
+        elif resposta_user == 'Tesoura':
+            if resposta_bot == "Papel":
+                await ctx.send('Você ganhou :unamused:')
+
+            elif resposta_bot == 'Pedra':
+                await ctx.send('Eu ganhei :sunglasses:')
+
+            elif resposta_bot == 'Tesoura':
+                await ctx.send('Empate :cry:')
                     
 def setup(bot):
     bot.add_cog(Minigames(bot))

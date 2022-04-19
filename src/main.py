@@ -6,7 +6,7 @@ import logging
 from modules.bot import NewHelpName
 
 intents = discord.Intents().all()
-activity = discord.Activity(type=discord.ActivityType.watching, name=" o Lar dos Cornos :D")
+activity = discord.Activity(type=discord.ActivityType.listening, name=" A Incompetência do Lar dos Cornos :D")
 bot = bridge.Bot(command_prefix=get_prefix(), intents=intents, help_command=NewHelpName(no_category = 'Sem categoria'), activity=activity, status=discord.Status.idle)
 
 
