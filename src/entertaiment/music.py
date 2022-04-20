@@ -137,7 +137,7 @@ class Song:
 
     def create_embed(self):
         embed = (discord.Embed(title='Tocando agora:',
-                               description='```css\n{0.source.title}\n```'.format(self),
+                               description='css\n{0.source.title}\n'.format(self),
                                color=discord.Color.random())
                  .add_field(name='Duração:', value=self.source.duration)
                  .add_field(name='Pedido por:', value=self.requester.mention)
@@ -287,7 +287,7 @@ class Music(commands.Cog):
 
     @commands.command(name='join', invoke_without_subcommand=True)
     async def _join(self, ctx: commands.Context):
-        """Joins a voice channel."""
+        """Entra em um canal de voz."""
 
         destination = ctx.author.voice.channel
         if ctx.voice_state.voice:
@@ -299,8 +299,8 @@ class Music(commands.Cog):
     @commands.command(name='summon')
     @commands.has_permissions(manage_guild=True)
     async def _summon(self, ctx: commands.Context, *, channel: discord.VoiceChannel = None):
-        """Summons the bot to a voice channel.
-        If no channel was specified, it joins your channel.
+        """Chama forçadamente o bot para o canal de voz (Apenas para cargos altos).\n
+        Caso não especifique algum canal ele entrará no que o usuario está.
         """
 
         if not channel and not ctx.author.voice:
@@ -316,7 +316,7 @@ class Music(commands.Cog):
     @commands.command(name='leave', aliases=['disconnect'])
     @commands.has_permissions(manage_guild=True)
     async def _leave(self, ctx: commands.Context):
-        """Clears the queue and leaves the voice channel."""
+        """Limpa a queue e sai do canal de voz."""
 
         if not ctx.voice_state.voice:
             return await ctx.send('Não estou conectada a nenhum canal de voz. D:')
@@ -326,7 +326,7 @@ class Music(commands.Cog):
 
     @commands.command(name='volume')
     async def _volume(self, ctx: commands.Context, *, volume: int):
-        """Sets the volume of the player."""
+        """Modifica o volume do bot."""
 
         if not ctx.voice_state.is_playing:
             return await ctx.send('Nada está sendo tocado no momento. :eyes:')
@@ -339,13 +339,13 @@ class Music(commands.Cog):
 
     @commands.command(name='now', aliases=['current', 'playing', 'np'])
     async def _now(self, ctx: commands.Context):
-        """Displays the currently playing song."""
+        """Manda a música que está sendo tocada no momento."""
 
         await ctx.send(embed=ctx.voice_state.current.create_embed())
 
     @commands.command(name='pause')
     async def _pause(self, ctx: commands.Context):
-        """Pauses the currently playing song."""
+        """Pausa a musica que está sendo tocada no momento."""
 
         if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_playing():
             ctx.voice_state.voice.pause()
@@ -353,7 +353,7 @@ class Music(commands.Cog):
 
     @commands.command(name='resume')
     async def _resume(self, ctx: commands.Context):
-        """Resumes a currently paused song."""
+        """Resume a música pausada."""
 
         if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_paused():
             ctx.voice_state.voice.resume()
@@ -361,7 +361,7 @@ class Music(commands.Cog):
 
     @commands.command(name='stop')
     async def _stop(self, ctx: commands.Context):
-        """Stops playing song and clears the queue."""
+        """Para de tocar e limpa a queue."""
 
         ctx.voice_state.songs.clear()
 
@@ -371,8 +371,8 @@ class Music(commands.Cog):
 
     @commands.command(name='skip')
     async def _skip(self, ctx: commands.Context):
-        """Vote to skip a song. The requester can automatically skip.
-        3 skip votes are needed for the song to be skipped.
+        """Voto para pular música. Quem pediu a música pode pular ela sem problemas.
+        No minimo 3 votos são necessarios para pular a música.
         """
 
         if not ctx.voice_state.is_playing:
@@ -398,8 +398,8 @@ class Music(commands.Cog):
 
     @commands.command(name='queue')
     async def _queue(self, ctx: commands.Context, *, page: int = 1):
-        """Shows the player's queue.
-        You can optionally specify the page to show. Each page contains 10 elements.
+        """Mostra a queue.
+        Você pode dizer qual página quer especificamente. Cada página contém 10 elementos.
         """
 
         if len(ctx.voice_state.songs) == 0:
@@ -421,7 +421,7 @@ class Music(commands.Cog):
 
     @commands.command(name='shuffle')
     async def _shuffle(self, ctx: commands.Context):
-        """Shuffles the queue."""
+        """Aleatoriza a queue."""
 
         if len(ctx.voice_state.songs) == 0:
             return await ctx.send('Queue vazia.')
@@ -431,7 +431,7 @@ class Music(commands.Cog):
 
     @commands.command(name='remove')
     async def _remove(self, ctx: commands.Context, index: int):
-        """Removes a song from the queue at a given index."""
+        """Remove música da queue com o número especificado."""
 
         if len(ctx.voice_state.songs) == 0:
             return await ctx.send('Queue vazia.')
@@ -441,8 +441,8 @@ class Music(commands.Cog):
 
     @commands.command(name='loop')
     async def _loop(self, ctx: commands.Context):
-        """Loops the currently playing song.
-        Invoke this command again to unloop the song.
+        """Toca a música atual infinitamente.
+        Use o comando novamente para desabilitar.
         """
 
         if not ctx.voice_state.is_playing:
@@ -454,11 +454,11 @@ class Music(commands.Cog):
 
     @commands.command(name='play')
     async def _play(self, ctx: commands.Context, *, search: str):
-        """Plays a song.
-        If there are songs in the queue, this will be queued until the
-        other songs finished playing.
-        This command automatically searches from various sites if no URL is provided.
-        A list of these sites can be found here: https://rg3.github.io/youtube-dl/supportedsites.html
+        """Toca uma música.
+        Caso alguma música esteja tocando no momento, a música pedida ira para a queue
+        até que as outras acima acabem.
+        Este comando procura automaticamente por varios sites caso nenhum link seja colocado.
+        Lista de sites em que o comando pesquisa: https://rg3.github.io/youtube-dl/supportedsites.html
         """
 
         if not ctx.voice_state.voice:
