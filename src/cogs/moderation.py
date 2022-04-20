@@ -4,7 +4,7 @@ from discord.commands.core import slash_command, user_command
 from discord.ext import commands, bridge
 from discord.ext.bridge import BridgeContext, BridgeExtContext, BridgeApplicationContext
 from modules.utils import get_guildid
-from urllib.request import urlopen
+from googlesearch import search
 
 role_ids = [...]
 
@@ -81,8 +81,11 @@ class Moderation(commands.Cog):
 
         await ctx.send(f"Opa {str(guess.content)}")
         await ctx.send(f"Espero que você tome no seu cu {guess.content}. :hugging:")
-        
-        
-        
+
+    @commands.command()
+    async def search(self, ctx: commands.Context, *, pesquisa):
+        for resultado in search(pesquisa, tld='co.in', num=3, stop=3, pause=2):
+            await ctx.send(resultado)
+
 def setup(bot):
     bot.add_cog(Moderation(bot))
