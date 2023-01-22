@@ -15,7 +15,6 @@ class AddButton(discord.ui.Button):
             emoji = emoji
         )
 
-
 class Social(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
