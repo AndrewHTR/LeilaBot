@@ -21,8 +21,7 @@ class Social(commands.Cog):
     
     @app_commands.command(description='Mostra perfil dos usuarios')
     async def perfil(self, inter: discord.Interaction, member: discord.Member = None):   
-            #region embeds
-        
+        #region embeds
         if not member: member = inter.user
         if not member.bot:
             time   = datetime.datetime.now() 
