@@ -1,4 +1,4 @@
-import asyncio
+'''import asyncio
 import functools
 import itertools
 import math
@@ -489,6 +489,4 @@ class Music(commands.Cog):
         if ctx.voice_client:
             if ctx.voice_client.channel != ctx.author.voice.channel:
                 raise commands.CommandError('Já estou em um canal de voz. :wink:')
-
-def setup(bot):
-    bot.add_cog(Music(bot))
+'''

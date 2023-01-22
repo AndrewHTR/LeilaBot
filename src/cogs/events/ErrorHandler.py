@@ -28,6 +28,3 @@ class ErrorHandler(commands.Cog):
             await ctx.send("Esse comando não existe.")
             print(error)
             
-
-def setup(bot):
-    bot.add_cog(ErrorHandler(bot))

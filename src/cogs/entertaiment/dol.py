@@ -1,4 +1,5 @@
 import discord
+from discord import app_commands
 from discord.ext import commands
 import requests
 import datetime
@@ -7,8 +8,8 @@ class Dol(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @commands.command()
-    async def dolar(self, ctx: commands.Context):
+    @app_commands.command()
+    async def dolar(self, inter: discord.Interaction):
         time = datetime.datetime.utcnow()
         url = 'https://economia.awesomeapi.com.br/all/USD-BRL'
         response = requests.get(url)
@@ -18,13 +19,10 @@ class Dol(commands.Cog):
         embed.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
         embed.set_thumbnail(url='https://media.discordapp.net/attachments/959082477555679232/966071295185915954/kiss.png')
 
-        if response.status_code == 200:
-            await ctx.send(embed=embed)
-        else:
-            await ctx.send('Erro ao buscar valor do Dólar')
+        await inter.response.send_message(embed=embed)
     
-    @commands.command()
-    async def euro(self, ctx: commands.Context):
+    @app_commands.command()
+    async def euro(self, inter: discord.Interaction):
         time = datetime.datetime.utcnow()
         url = 'https://economia.awesomeapi.com.br/all/'
         response = requests.get(url)
@@ -34,11 +32,5 @@ class Dol(commands.Cog):
         embed.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
         embed.set_thumbnail(url='https://media.discordapp.net/attachments/959082477555679232/966071295185915954/kiss.png')
 
-        if response.status_code == 200:
-            await ctx.send(embed=embed)
-        else:
-            await ctx.send('Erro ao buscar valor do Dólar')
-
-
-def setup(bot):
-    bot.add_cog(Dol(bot))
+        await inter.response.send_message(embed=embed)
+       

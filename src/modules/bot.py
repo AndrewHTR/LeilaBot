@@ -76,3 +76,19 @@ class NewHelpName(commands.MinimalHelpCommand):
 
         view.add_item(AddButton(texto='Wiki', url='https://github.com/AndrewHTR/AlfredoBot/wiki'))
         await destination.send(embed=emby, view=view)
+
+
+from discord.ext.commands import Bot
+import discord
+from modules.utils import get_guildid
+
+guild = discord.Object(id=int(get_guildid()))
+
+class Bot(Bot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    async def setup_hook(self):
+        await self.load_extension("cogs")
+        self.tree.copy_global_to(guild=guild)
+        await self.tree.sync(guild=guild)
