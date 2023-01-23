@@ -1,8 +1,5 @@
-import os
-import logging
 import asyncio
 import discord
-from discord.ext import commands
 from modules.utils import get_token, get_prefix
 from modules.bot import Bot
 

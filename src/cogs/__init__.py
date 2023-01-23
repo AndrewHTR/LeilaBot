@@ -6,7 +6,6 @@ from .events.on_ready import OnReady
 from .entertaiment.dol import Dol
 from .entertaiment.minigames import Minigames
 
-
 extensions = (
     Moderation,
     Social,
