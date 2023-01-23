@@ -4,6 +4,8 @@ from discord.ext import commands
 import random
 import datetime
 from discord.ui import Button, View
+from cogs.moderation.mongodb import *
+
 
 class AddButton(discord.ui.Button):
     def __init__(self, texto = None, url = None, custom_id = None, emoji = None):
@@ -16,12 +18,26 @@ class AddButton(discord.ui.Button):
         )
 
 class Social(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_message(self, message: discord.Message):
+        myquery = {"_id": message.author.id}
+        user = collection.find(myquery)
+        for result in user:
+            score = result["score"]
+        score += 1
+        collection.update_one({"_id": message.author.id}, {"$set": {"score": score}})
+        await message.channel.send(f"Pontos atuais: {score}")
     
     @app_commands.command(description='Mostra perfil dos usuarios')
-    async def perfil(self, inter: discord.Interaction, member: discord.Member = None):   
+    async def perfil(self, inter: discord.Interaction, member: discord.Member = None): 
         #region embeds
+        myquery = {"_id": inter.user.id}
+        if (collection.count_documents(myquery) == 0):
+            post = {"_id": inter.user.id, "score": 1}
+            collection.insert_one(post)
         if not member: member = inter.user
         if not member.bot:
             time   = datetime.datetime.now() 
@@ -41,6 +57,10 @@ class Social(commands.Cog):
    
     @app_commands.command(description='Mostra o avatar do usuario')
     async def avatar(self, inter: discord.Interaction, member: discord.Member = None):
+        try:
+            pass 
+        except:
+            await inter.response.send_message("não foi", ephemeral=True, delete_after=20)
         if not member: member = inter.user
         avatar = member.avatar.url[:90]
         time   = datetime.datetime.now() 

@@ -37,7 +37,6 @@ class Moderation(commands.Cog):
         except:
             await inter.response.send_message('Não foi possivel banir o usuario. Meu cargo pode estar abaixo ao dele.')
             
-        
     @app_commands.command()
     # ! @bridge.has_permissions(kick_members=True)
     async def kick(self, inter: discord.Interaction, member: discord.Member):
@@ -56,12 +55,7 @@ class Moderation(commands.Cog):
     async def debug(self, inter: discord.Interaction):
         """Testes"""
         await inter.response.send_message('Me diz teu nome.')
-        guess = await self.bot.wait_for('message', check=lambda message: message.author == inter.response.send_message().author)
+        guess = await self.bot.wait_for('message', check=lambda message: message.author == inter.user)
 
         await inter.response.send_message(f"Opa {str(guess.content)}")
         await inter.response.send_message(f"Espero que você tome no seu cu {guess.content}. :hugging:")
-
-    """@app_commands.command()
-    async def search(self, inter: discord.Interaction, *, pesquisa: str):
-        for resultado in search(pesquisa, tld='co.in', num=3, stop=3, pause=2):
-            await inter.response.send_message(resultado)"""

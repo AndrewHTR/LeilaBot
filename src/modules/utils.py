@@ -21,3 +21,9 @@ def get_prefix():
     if prefix == None:
         return os.environ["prefix"]
     return prefix
+
+def get_uri():
+    uri = os.getenv("URI")
+    if uri == None:
+        return os.environ["URI"]
+    return uri
