@@ -58,16 +58,15 @@ class Social(commands.Cog):
     @app_commands.command(description='Mostra o avatar do usuario')
     async def avatar(self, inter: discord.Interaction, member: discord.Member = None):
         try:
-            pass
+            pass 
         except:
             await inter.response.send_message("não foi", ephemeral=True, delete_after=20)
-        if member == None: member = inter.user
+        if not member: member = inter.user
         avatar = member.avatar.url[:90]
         time   = datetime.datetime.now() 
+        
         embed = discord.Embed(title=f'__**Avatar requisitado por:**__ **{inter.user.name}**', color = 0xad75ad, description='Aperte no botão **"DOWNLOAD"** abaixo\npara fazer download da imagem.')
-        a = embed.set_image(url=avatar)
-        a.image.width = 800
-        a.image.height = 800
+        embed.set_image(url=avatar)
         embed.set_footer(text = f"Horário: {time.strftime('%H:%M:%S')}", icon_url = "https://media.discordapp.net/attachments/661371734531768363/961359898233430016/unknown.png")
 
         download_button = Button(label='Download', url=avatar)
